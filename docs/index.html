@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цифровое разрешение — Академия ТОП</title>
+  <style>
+    :root {
+      --bg: #ff594f;
+      --padding: clamp(16px, 5vw, 28px);
+      --qr-size: clamp(120px, 40vw, 180px); /* Уменьшенный размер QR-кода */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg);
+      color: #fff;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      text-align: center;
+      padding: var(--padding);
+    }
+
+    .container {
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+      width: min(92vw, 560px); /* Увеличил ширину контейнера */
+    }
+
+    .brand img {
+      width: 80px; /* Чуть больше логотип */
+      height: auto;
+      display: block;
+    }
+
+    h1 {
+      margin: 8px 0;
+      font-weight: 800;
+      font-size: clamp(24px, 6vw, 36px); /* Увеличенный заголовок */
+    }
+
+    .name {
+      margin: 0;
+      font-weight: 800;
+      font-size: clamp(28px, 7vw, 40px); /* Увеличенное имя */
+    }
+
+    .subtitle {
+      margin: 0;
+      opacity: 0.9;
+      font-size: clamp(16px, 4vw, 22px); /* Увеличенный подзаголовок */
+    }
+
+    .qr {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      width: var(--qr-size);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .qr img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    footer {
+      position: fixed;
+      bottom: calc(env(safe-area-inset-bottom, 0) + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      opacity: 0.95;
+      font-size: 14px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="brand">
+      <img src="logo.png" alt="Логотип Академии ТОП">
+    </header>
+    <h1>Цифровое разрешение на выход</h1>
+    <p class="name">Иван Иванов</p>
+    <p class="subtitle">Ученик группы B2020</p>
+    <div class="qr" id="qrcode" role="img" aria-label="QR-код для идентификации"></div>
+  </main>
+
+  <footer>Сайт разработан учащимися Академии ТОП ❤️</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const qrText = "ID=B2020-00123";
+    const qrContainer = document.getElementById('qrcode');
+    
+    // Генерация QR-кода при загрузке страницы
+    const size = Math.max(100, qrContainer.clientWidth - 24); // Уменьшенный минимальный размер
+    new QRCode(qrContainer, {
+      text: qrText,
+      width: size,
+      height: size,
+      colorDark: '#000',
+      colorLight: '#fff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  </script>
+</body>
+</html>
