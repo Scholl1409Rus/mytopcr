@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Главная — ТОП</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --red:#E53935;
+      --ink:#0F172A;
+      --muted:#6B7280;
+      --tile:#F6F7FA;
+      --tile-bd:#E7E9F0;
+      --radius-xl:26px;
+      --radius-lg:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--ink);
+      background:var(--red);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    .page{
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    /* Красный фон */
+    header{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-align:center;
+      padding:16px 0 0;
+    }
+    .logo img{height:44px;display:block;margin-bottom:12px}
+    header h1{
+      font-weight:800;
+      font-size:clamp(22px,6vw,36px);
+      line-height:1.2;
+    }
+
+    /* Белая плашка */
+    main{
+      margin-top:calc(-1 * min(12vh, 96px)); /* выше на фон */
+      background:#fff;
+      border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+      padding:18px 16px 28px;
+      box-shadow:0 -8px 30px rgba(0,0,0,.12);
+    }
+
+    .card{
+      background:#F7F7F9;
+      border:1px solid var(--tile-bd);
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:14px;
+      overflow:hidden;
+    }
+
+    /* Новости */
+    .news{
+      display:grid;
+      grid-template-columns:1fr 100px;
+      gap:12px;
+      align-items:center;
+    }
+    .news .title{font-weight:800;font-size:14px;color:var(--red);margin-bottom:6px}
+    .news .text{font-size:13px;color:var(--muted);line-height:1.35}
+    .news .tg-link{
+      display:inline-block;margin-top:8px;
+      padding:6px 10px;
+      border:1px solid #e5e5e5;border-radius:10px;
+      background:#fff;color:#000;font-weight:700;font-size:13px;
+      text-decoration:none;
+    }
+    .news img{width:100%;height:100px;object-fit:cover;border-radius:12px}
+
+    /* Занятия */
+    .classes{display:flex;align-items:center;gap:12px}
+    .labels{min-width:100px}
+    .labels .top{font-weight:800;font-size:13px}
+    .labels .sub{font-size:12px;color:var(--muted)}
+    .bar{flex:1;height:8px;background:#E5E7EB;border-radius:999px;position:relative}
+    .bar::after{
+      content:"";position:absolute;left:12px;top:50%;
+      width:14px;height:14px;border-radius:50%;background:#D1D5DB;
+      transform:translateY(-50%);box-shadow:0 0 0 3px rgba(0,0,0,.06);
+    }
+
+    /* Сетка кнопок */
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+    .tile{
+      display:flex;align-items:center;gap:10px;
+      background:var(--tile);
+      border:1px solid var(--tile-bd);
+      border-radius:var(--radius-lg);
+      padding:14px;
+      min-height:72px;
+      text-decoration:none;color:var(--ink);
+      font-weight:800;font-size:15px;
+      transition:transform .1s;
+    }
+    .tile:active{transform:scale(.97)}
+    .tile img.icon{width:24px;height:24px;flex-shrink:0}
+
+    /* планшеты и выше */
+    @media(min-width:768px){
+      main{
+        margin-top:calc(-1 * min(14vh, 120px));
+        padding:22px 18px 34px;
+        border-radius:28px 28px 0 0;
+        box-shadow:0 -10px 36px rgba(0,0,0,.12);
+      }
+      .news{grid-template-columns:1fr 120px}
+      .news img{height:120px}
+    }
+    @media(min-width:1024px){
+      header h1{font-size:40px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo"><img src="logo.png" alt="ТОП"></div>
+      <h1>Привет, Алексей<br>Логинов</h1>
+    </header>
+
+    <main>
+      <!-- Новости -->
+      <section class="card news">
+        <div>
+          <div class="title">Новости перед парами</div>
+          <div class="text" id="promo-news">Загружаем новости…</div>
+          <a id="promo-link" class="tg-link" href="#" target="_blank" rel="noopener" hidden>Открыть в Telegram</a>
+        </div>
+        <img src="news.png" alt="Новости">
+       <script type="application/json" id="news-seed-inline">
+[
+  {
+    "date": "2025-09-07T12:00:00",
+    "text": "Когда есть повод для гордости 🤗\n\nДелимся работой студентки направления «Компьютерной графики и дизайна». Это 3D-проект «Музея современного искусства».",
+    "url": "https://t.me/itacademy_top/1236"
+  },
+  {
+    "date": "2025-09-07T09:10:00",
+    "text": "Сегодня пары по расписанию, аудитории без изменений.",
+    "url": "https://t.me/itacademy_top/1235"
+  }
+]
+</script>
+      </section>
+
+      <!-- Занятия -->
+      <section class="card classes">
+        <div class="labels">
+          <div class="top">Пары</div>
+          <span class="sub">закончились</span>
+        </div>
+        <div class="bar"></div>
+      </section>
+
+      <!-- Кнопки -->
+      <section class="grid">
+        <a class="tile" href="#"><img class="icon" src="emoji_png/books.png"><div class="title">ДЗ</div></a>
+        <a class="tile" href="#"><img class="icon" src="emoji_png/check.png"><div class="title">Оценки</div></a>
+        <a class="tile" href="#"><img class="icon" src="emoji_png/calendar.png"><div class="title">Расписание</div></a>
+        <a class="tile" href="#"><img class="icon" src="emoji_png/chat.png"><div class="title">Отзыв</div></a>
+        <a class="tile" href="#"><img class="icon" src="emoji_png/materials.png"><div class="title">Материалы</div></a>
+        <a class="tile" href="permissions-form.html"><img class="icon" src="emoji_png/exit.png"><div class="title">Выход</div></a>
+      </section>
+    </main>
+  </div>
+
+  <script>
+  (async function promoCardNews(){
+    const elNews=document.getElementById('promo-news');
+    const elLink=document.getElementById('promo-link');
+
+    async function fromApi(){
+      try{
+        const r=await fetch('/api/news?limit=1',{cache:'no-store'});
+        if(!r.ok) throw 0;
+        const data=await r.json();
+        if(Array.isArray(data)&&data.length){
+          const x=data[0]; return {text:x.text||'',url:x.url||null};
+        }
+      }catch(e){}
+      return null;
+    }
+    function fromSeed(){
+      try{
+        const arr=JSON.parse(document.getElementById('news-seed-inline').textContent);
+        arr.sort((a,b)=>new Date(b.date)-new Date(a.date));
+        return {text:arr[0].text,url:arr[0].url};
+      }catch(e){}
+      return null;
+    }
+
+    const item=(await fromApi())||fromSeed();
+    if(item){elNews.textContent=item.text;if(item.url){elLink.href=item.url;elLink.hidden=false}}
+  })();
+  </script>
+</body>
+</html>
