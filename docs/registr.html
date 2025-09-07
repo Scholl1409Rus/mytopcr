@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Регистрация — ТОП</title>
+
+  <!-- Favicon (опционально) -->
+  <link rel="icon" type="favicon.png" href="favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --red:#E53935; --ink:#0F172A; --muted:#6B7280;
+      --tile:#F6F7FA; --bd:#E7E9F0;
+      --r-xl:28px; --r-lg:14px;
+      --btn:#FF5A52; --shadow:0 18px 40px rgba(0,0,0,.16);
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:#fff;}
+
+    /* ===== HERO ===== */
+    .hero{
+      background:var(--red); color:#fff; min-height:44vh;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; padding:56px 16px 164px;
+      border-bottom-left-radius:36px; border-bottom-right-radius:36px;
+      position:relative; overflow:hidden; z-index:1;
+    }
+    .logo{width:120px;height:auto;margin-bottom:14px}
+    .hero h1{margin:0 0 6px;font-weight:800;line-height:1.2;font-size:clamp(24px,5.2vw,40px)}
+    .hero p{margin:0;opacity:.95;font-size:clamp(14px,2.8vw,18px)}
+
+    /* ===== CARD ===== */
+    .wrap{width:min(980px,94vw);margin:0 auto 40px}
+    .card{background:#fff;border-radius:var(--r-xl);box-shadow:var(--shadow);
+      padding:22px 16px 26px;margin:-96px auto 0;position:relative;z-index:2}
+
+    .progress{height:8px;background:#F1F3F8;border-radius:999px;overflow:hidden;margin-bottom:16px}
+    .progress span{display:block;height:100%;width:8%;background:#DE2F30;border-radius:999px;transition:width .25s ease}
+
+    /* переключатель роли */
+    .seg{
+      display:grid; grid-template-columns:1fr 1fr; gap:8px;
+      background:#F5F6FA; border:1px solid var(--bd); border-radius:16px; padding:6px; margin-bottom:12px;
+    }
+    .seg button{
+      padding:12px; border-radius:12px; border:none; cursor:pointer; font-weight:800;
+      background:transparent; color:#475569; transition:.15s;
+    }
+    .seg button.active{background:#fff; color:#0f172a; box-shadow:0 6px 14px rgba(0,0,0,.06)}
+
+    /* поля */
+    .grid{display:grid; gap:12px}
+    .group{background:var(--tile); border:1px solid var(--bd); border-radius:18px; padding:12px}
+    .group.full{grid-column:1/-1}
+    label{display:block; font-weight:800; font-size:14px; margin:0 4px 8px}
+    .field, select{
+      width:100%; background:#fff; border:1px solid var(--bd); border-radius:var(--r-lg);
+      padding:14px; font-size:16px; outline:none;
+    }
+    .field::placeholder{color:#A7AFBA}
+    .hint{font-size:12px; color:#8B91A0; margin-top:6px}
+
+    /* пароль */
+    .pwd{
+      position:relative;
+    }
+    .pwd .toggle{
+      position:absolute; right:10px; top:50%; transform:translateY(-50%);
+      background:transparent; border:none; cursor:pointer; font-weight:800; color:#64748b;
+    }
+
+    /* низ карточки */
+    .actions{
+      position:sticky; bottom:0; margin-top:16px; padding-top:12px;
+      background:linear-gradient(180deg,rgba(255,255,255,0) 0%,#fff 30%,#fff 100%);
+      border-radius:0 0 var(--r-xl) var(--r-xl);
+    }
+    .btn{
+      width:100%; padding:16px; border:none; border-radius:20px;
+      background:var(--btn); color:#fff; font-weight:800; font-size:18px;
+      cursor:pointer; transition:.15s; box-shadow:0 12px 24px rgba(255,90,82,.28)
+    }
+    .btn:disabled{opacity:.6; cursor:not-allowed; box-shadow:none}
+    .btn:active{transform:scale(.985)}
+
+    .toast{
+      position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+      background:#111827; color:#fff; padding:12px 16px; border-radius:12px; font-weight:700;
+      box-shadow:0 10px 30px rgba(0,0,0,.25); opacity:0; pointer-events:none; transition:.25s ease; z-index:50
+    }
+    .toast.show{opacity:1; pointer-events:auto}
+
+    /* адаптив */
+    @media (min-width:560px){ .card{padding:24px} .grid{grid-template-columns:1fr 1fr} .logo{width:132px} }
+    @media (min-width:900px){ .hero{padding-bottom:180px} .card{margin:-110px auto 0;padding:28px 24px} .wrap{width:min(980px,92vw)} }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <img class="logo" src="logo.png" alt="ТОП">
+    <h1>Регистрация</h1>
+    <p>Выберите роль и заполните форму</p>
+  </header>
+
+  <div class="wrap">
+    <main class="card" role="main">
+      <div class="progress"><span id="bar"></span></div>
+
+      <!-- Переключатель роли -->
+      <div class="seg" role="tablist" aria-label="Выбор роли">
+        <button id="tab-student" class="active" type="button" role="tab" aria-selected="true">Ученик</button>
+        <button id="tab-teacher" type="button" role="tab" aria-selected="false">Учитель</button>
+      </div>
+
+      <form id="regForm" class="grid" novalidate>
+        <!-- общие -->
+        <div class="group full">
+          <label for="fio">ФИО</label>
+          <input class="field" id="fio" name="fio" type="text" placeholder="Иванов Иван Иванович" required>
+        </div>
+
+        <div class="group">
+          <label for="email">Email</label>
+          <input class="field" id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="group">
+          <label for="phone">Телефон</label>
+          <input class="field" id="phone" name="phone" type="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+          <div class="hint">В формате +7…</div>
+        </div>
+
+        <!-- только ученик -->
+        <div class="group student-only">
+          <label for="group">Группа</label>
+          <input class="field" id="group" name="group" type="text" placeholder="B2020 / ИВТ-21">
+        </div>
+
+        <!-- только учитель -->
+        <div class="group teacher-only" hidden>
+          <label for="subject">Предмет</label>
+          <input class="field" id="subject" name="subject" type="text" placeholder="Математика / Информатика">
+        </div>
+        <div class="group teacher-only" hidden>
+          <label for="position">Должность</label>
+          <input class="field" id="position" name="position" type="text" placeholder="Преподаватель / Куратор">
+        </div>
+
+        <!-- пароль -->
+        <div class="group">
+          <label for="password">Пароль</label>
+          <div class="pwd">
+            <input class="field" id="password" name="password" type="password" placeholder="Минимум 6 символов" minlength="6" required>
+            <button class="toggle" type="button" aria-label="Показать пароль" data-target="password">Показать</button>
+          </div>
+        </div>
+
+        <div class="group">
+          <label for="password2">Повторите пароль</label>
+          <div class="pwd">
+            <input class="field" id="password2" name="password2" type="password" placeholder="Ещё раз пароль" minlength="6" required>
+            <button class="toggle" type="button" aria-label="Показать пароль" data-target="password2">Показать</button>
+          </div>
+        </div>
+
+        <div class="actions full">
+          <button id="submitBtn" class="btn" type="submit" disabled>Зарегистрироваться</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Готово</div>
+
+  <script>
+    // элементы
+    const tabStudent  = document.getElementById('tab-student');
+    const tabTeacher  = document.getElementById('tab-teacher');
+    const studentOnly = Array.from(document.querySelectorAll('.student-only'));
+    const teacherOnly = Array.from(document.querySelectorAll('.teacher-only'));
+
+    const form  = document.getElementById('regForm');
+    const btn   = document.getElementById('submitBtn');
+    const bar   = document.getElementById('bar');
+    const toast = document.getElementById('toast');
+
+    let role = 'student';
+
+    function setRole(newRole){
+      role = newRole;
+      const sActive = role === 'student';
+      tabStudent.classList.toggle('active', sActive);
+      tabTeacher.classList.toggle('active', !sActive);
+      tabStudent.setAttribute('aria-selected', sActive);
+      tabTeacher.setAttribute('aria-selected', !sActive);
+
+      studentOnly.forEach(el => el.hidden = !sActive);
+      teacherOnly.forEach(el => el.hidden = sActive);
+      completeness();
+    }
+
+    tabStudent.addEventListener('click', ()=>setRole('student'));
+    tabTeacher.addEventListener('click', ()=>setRole('teacher'));
+
+    // показать/скрыть пароль
+    document.querySelectorAll('.toggle').forEach(btnT=>{
+      btnT.addEventListener('click', ()=>{
+        const target = document.getElementById(btnT.dataset.target);
+        target.type = target.type === 'password' ? 'text' : 'password';
+        btnT.textContent = target.type === 'password' ? 'Показать' : 'Скрыть';
+      });
+    });
+
+    // валидация + прогресс
+    function requiredFields(){
+      const common = ['fio','email','phone','password','password2'];
+      const student = ['group'];
+      const teacher = ['subject','position'];
+      const roleFields = role === 'student' ? student : teacher;
+      return [...common, ...roleFields];
+    }
+
+    function completeness(){
+      const ids = requiredFields();
+      const inputs = ids.map(id => document.getElementById(id)).filter(Boolean);
+      // пароль совпадает
+      const passOk = document.getElementById('password').value.length >= 6 &&
+                     document.getElementById('password').value === document.getElementById('password2').value;
+
+      const filled = inputs.filter(el => (el.value||'').trim() !== '').length + (passOk ? 1 : 0);
+      const total  = inputs.length + 1; // + правило по паролю
+      const percent = Math.max(8, Math.round((filled/total)*100));
+      bar.style.width = percent + '%';
+
+      btn.disabled = !(filled === total);
+    }
+    form.addEventListener('input', completeness);
+    form.addEventListener('change', completeness);
+    completeness();
+
+    // отправка
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(btn.disabled) return;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.role = role;
+      delete data.password2;
+
+      try{
+        const res = await fetch('/api/register', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+        if(!res.ok) throw 0;
+        toast.textContent = 'Регистрация успешна';
+      }catch(_){
+        // оффлайн-фоллбек
+        const list = JSON.parse(localStorage.getItem('register:queue')||'[]');
+        list.push({...data, queued_at:new Date().toISOString()});
+        localStorage.setItem('register:queue', JSON.stringify(list));
+        toast.textContent = 'Сохранено локально (офлайн)';
+      }
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 2200);
+
+      form.reset(); setRole(role); completeness();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  </script>
+</body>
+</html>
