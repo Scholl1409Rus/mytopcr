@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Пропуск</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E53935;--ink:#0F172A;--muted:#616779;--r-xl:26px;--shadow:0 22px 46px rgba(0,0,0,.18)}
+  *{box-sizing:border-box;margin:0;padding:0} html,body{height:100%} html{-webkit-text-size-adjust:100%}
+  body{font-family:'Montserrat',system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--red);color:#fff}
+
+  .hero{position:relative;z-index:0;width:100%;min-height:48vh;display:flex;align-items:center;justify-content:center;padding:56px 16px 148px;text-align:center;overflow:hidden;background:var(--red)}
+  .hero-title{position:relative;z-index:1;font-weight:800;line-height:1.2;font-size:clamp(22px,6vw,32px)}
+  .hero-img{position:absolute;right:-8%;bottom:-8%;width:520px;opacity:.32;filter:brightness(220%) contrast(120%) saturate(140%);pointer-events:none;z-index:0}
+
+  .card{
+    position:relative; z-index:10; isolation:isolate;
+    width:min(460px,92vw);
+    margin:-56px auto 28px; background:#fff; color:var(--ink);
+    border-radius:var(--r-xl); box-shadow:var(--shadow);
+    padding:44px 18px 32px; text-align:center;
+  }
+
+  .progress{width:86%;height:12px;margin:2px auto 18px;background:#ECEFF3;border-radius:999px;overflow:hidden}
+  .progress>span{display:block;height:100%;width:100%;background:#DE2F30;border-radius:999px}
+
+  .avatar{width:86px;height:86px;border-radius:50%;margin:0 auto 14px;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+
+  .title{font-size:clamp(20px,5.2vw,26px);line-height:1.22;font-weight:800;margin-bottom:10px}
+  .sub{color:var(--muted);font-size:15px;word-break:break-word}
+
+  .actions{margin-top:26px}
+  .btn-primary{display:block;width:100%;background:#FF4A3D;color:#fff;text-decoration:none;font-weight:800;font-size:20px;line-height:1;padding:18px 16px;border:none;border-radius:22px;box-shadow:0 18px 30px rgba(255,74,61,.28)}
+  .btn-primary:active{transform:scale(.985)}
+
+  @media(min-width:768px){
+    .hero{padding:64px 20px 168px}
+    .hero-img{right:-2%;bottom:-14%;width:720px}
+    .card{margin:-64px auto 32px;border-radius:30px;padding:48px 22px 34px}
+  }
+</style>
+</head>
+<body>
+  <section class="hero" aria-label="Верхний баннер">
+    <h1 class="hero-title">Цифровое<br>Разрешение на выход</h1>
+    <img class="hero-img" src="chelovek.png" alt="" aria-hidden="true">
+  </section>
+
+  <main class="card" role="main">
+    <div class="progress" aria-label="Прогресс"><span></span></div>
+
+    <div class="avatar">
+      <img src="avatar.png" alt="Аватар">
+    </div>
+    <div class="title">Иванов Иван Петров</div>
+    <div class="sub">
+      <a href="https://journal.top-academy.ru/application-1290" target="_blank" rel="noopener">
+        https://journal.top-academy.ru/application-1290
+      </a>
+    </div>
+
+    <div class="actions">
+      <a class="btn-primary" href="home.html">Готово</a>
+    </div>
+  </main>
+</body>
+</html>
