@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Страница не найдена</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      background-color: #ff5b4f;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    header {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    header img {
+      height: 40px; /* можно подогнать под твой размер */
+    }
+
+    h1 {
+      font-size: clamp(64px, 20vw, 150px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); color: #fff; }
+      50% { transform: scale(1.1); color: #ffeaea; }
+      100% { transform: scale(1); color: #fff; }
+    }
+
+    p {
+      font-size: clamp(14px, 4vw, 20px);
+      margin: 4px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- ЛОГО -->
+  <header>
+    <img src="logo.png" alt="logo.png">
+  </header>
+
+  <main>
+    <h1>404</h1>
+    <p>Кажется, вы провалились. Страница, которую вы ищете, была потеряна.</p>
+    <p><strong>Страница не найдена</strong></p>
+    <a class="btn" href="https://journal.top-academy.ru/ru/auth/login/index?returnUrl=%2Fru%2Fmain%2Fdashboard%2Fpage%2Findex">
+      На главную
+    </a>
+  </main>
+</body>
+</html>
